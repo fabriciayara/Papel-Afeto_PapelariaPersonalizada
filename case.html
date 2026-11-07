@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Papel & Afeto — Case Study</title>
+<meta name="description" content="Case study completo do processo de UX/UI do Papel & Afeto: pesquisa real, personas, jornada, wireframes, protótipo, identidade visual e auditoria de acessibilidade.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F7F4EF; --surface:#FFFFFF; --card:#E9D9D0; --border:#D9C4B4; --text:#302A26; --muted:#6B5D53;
+  --accent:#596747; --accent2:#B87579; --danger:#9E303D; --danger-bg:#F6E3E5;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:16px max(20px,env(safe-area-inset-left,0px)) 16px max(20px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--border);background:var(--surface)}
+.topnav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--text);text-decoration:none}
+.topnav a.back{font-size:12.5px;color:var(--accent);font-weight:600;text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 80px max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;color:var(--text);text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,52px);font-weight:700;line-height:1.08}
+h2{font-size:clamp(24px,4vw,32px);font-weight:600;line-height:1.2;margin-bottom:14px}
+h3{font-size:19px;font-weight:600;line-height:1.3;margin-bottom:8px}
+p{margin:0 0 14px;max-width:62ch}
+a{color:var(--accent)}
+.eyebrow{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:10px;display:block}
+.hero{padding:56px 0 44px;border-bottom:1px solid var(--border)}
+.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;font-size:13px;color:var(--muted)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.tag{background:var(--card);border-radius:999px;padding:6px 13px;font-size:12px;font-weight:600;color:var(--text)}
+section{padding:52px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+.tagmark{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-radius:999px;margin-bottom:16px}
+.tagmark.real{background:#E8EBE1;color:var(--accent)}
+.tagmark.hip{background:var(--card);color:#7A4F55}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 2px rgba(48,42,38,.04)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.list{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.list .row{display:flex;gap:12px;align-items:flex-start}
+.list .num{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:var(--accent2);flex:none;width:28px}
+.sources{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.src{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:500}
+.pullband{background:var(--card);margin:0 -20px;padding:40px 20px}
+.pullband blockquote{max-width:620px;margin:0 auto;font-family:'Playfair Display',serif;font-style:italic;font-size:22px;line-height:1.45;font-weight:600;text-align:center}
+.pullband cite{display:block;text-align:center;margin-top:14px;font-family:'DM Sans',sans-serif;font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600}
+.persona{border-left:3px solid var(--accent2);padding-left:16px;margin-bottom:22px}
+.persona .name{font-weight:700;font-size:15px;margin-bottom:4px}
+.journey-step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.journey-step:last-child{border-bottom:none}
+.journey-step .dot{width:26px;height:26px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
+.journey-step.critical .dot{background:var(--danger);color:#fff}
+.journey-step.critical h3{color:var(--danger)}
+.ia-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.ia-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.ia-item .finding{font-size:12px;color:var(--muted);margin-top:6px}
+.linkcard{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:18px 0;text-decoration:none;color:var(--text)}
+.linkcard:hover{border-color:var(--accent)}
+.linkcard .t{font-weight:700;font-size:15px}
+.linkcard .s{font-size:12.5px;color:var(--muted);margin-top:3px}
+.linkcard .arrow{font-size:20px;color:var(--accent);flex:none}
+.palette-row{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}
+.swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch .dot{width:46px;height:46px;border-radius:50%;border:1px solid var(--border)}
+.swatch .label{font-size:10.5px;color:var(--muted);text-align:center;max-width:70px}
+.type-sample{display:flex;flex-direction:column;gap:4px;margin:18px 0}
+.type-sample .h{font-family:'Playfair Display',serif;font-weight:700;font-size:30px}
+.type-sample .b{font-family:'DM Sans',sans-serif;font-size:15px;color:var(--muted)}
+.finding-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--danger);border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px}
+.finding-card.ok{border-left-color:var(--accent)}
+.finding-card .ftitle{font-weight:700;font-size:13.5px;margin-bottom:4px}
+.checklist{display:flex;flex-direction:column;gap:9px;margin:16px 0}
+.checklist .item{display:flex;gap:10px;align-items:flex-start;font-size:13.5px}
+.checklist .ok{color:var(--accent);font-weight:700;flex:none}
+.footer-note{font-size:12.5px;color:var(--muted);margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+@media (max-width:560px){
+  .grid2,.ia-grid{grid-template-columns:1fr}
+  .pullband blockquote{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a class="logo" href="index.html">Papel &amp; Afeto</a>
+  <a class="back" href="index.html">← Voltar pra loja</a>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+  <span class="eyebrow">Estudo de caso · UX/UI Design</span>
+  <h1>Papel & Afeto</h1>
+  <p style="font-size:17px;color:var(--muted);margin-top:16px;max-width:52ch">E-commerce de papelaria criativa personalizada — cadernos, agendas, cartões, convites e kits de presente feitos sob medida.</p>
+  <div class="meta">
+    <span>Yara Fabrícia</span>
+    <span>UX Research · Wireframes · Protótipo · UI · Acessibilidade</span>
+  </div>
+  <div class="tags">
+    <span class="tag">Pesquisa real</span>
+    <span class="tag">Personas</span>
+    <span class="tag">Protótipo clicável</span>
+    <span class="tag">WCAG 2.2</span>
+  </div>
+</div>
+
+<section>
+  <span class="eyebrow">Apresentação</span>
+  <h2>Terceiro projeto de uma linha de especialização</h2>
+  <p>Papel & Afeto é o terceiro projeto de uma linha de estudos de caso em e-commerce para pequenos negócios, cada um resolvendo um desafio de UX diferente — depois de uma loja de decoração artesanal (Traço e Barro) e uma loja de moda circular (ReVeste), este projeto olha para um problema específico da papelaria personalizada: o cliente precisa confiar em como o produto vai ficar, e em quando ele vai chegar, antes de pagar por algo que não pode ser devolvido do mesmo jeito que uma peça de roupa.</p>
+</section>
+
+<section>
+  <span class="eyebrow">O problema</span>
+  <h2>Comprar algo personalizado é um salto de confiança</h2>
+  <p>A loja vende cadernos artesanais, agendas, planners, cartões personalizados, convites, kits de presente e adesivos — produtos onde o valor está exatamente na parte que o cliente não consegue ver antes de comprar: o nome, a data, a cor, o texto que vai ficar gravado ali.</p>
+  <div class="list">
+    <div class="row"><span class="num">01</span><div><h3 style="font-size:15px;margin-bottom:2px">Visualizar a personalização</h3><p style="margin:0">O cliente não sabe como o nome, a cor ou o texto vão ficar no produto final antes de pagar.</p></div></div>
+    <div class="row"><span class="num">02</span><div><h3 style="font-size:15px;margin-bottom:2px">Comparar produtos</h3><p style="margin:0">Catálogos confusos, com preço em unidades diferentes de card para card, dificultam decidir entre opções parecidas.</p></div></div>
+    <div class="row"><span class="num">03</span><div><h3 style="font-size:15px;margin-bottom:2px">Entender prazos de produção</h3><p style="margin:0">O prazo real — que muda conforme o produto é feito sob encomenda — raramente aparece antes da compra.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Objetivos</span>
+  <h2>O que a loja precisa garantir</h2>
+  <p>Deixar o cliente ver o resultado antes de decidir, comparar produtos sem esforço, e saber — com confirmação por escrito, não promessa verbal — se o prazo de produção cabe no que ele precisa, especialmente quando existe uma data que não pode passar, como um casamento.</p>
+</section>
+
+<section>
+  <span class="tagmark real">● Pesquisa real</span>
+  <h2>O que 8 sites reais de papelaria personalizada mostraram</h2>
+  <p>Analisei concorrentes reais do setor — catálogos, páginas de produto, documentação de plataforma de e-commerce e uma reclamação pública — pra confirmar se os três problemas do escopo eram reais ou só hipótese.</p>
+  <div class="sources">
+    <span class="src">Zazzle</span><span class="src">FuturaIM</span><span class="src">Paperview</span>
+    <span class="src">Persona Papelaria</span><span class="src">Printi</span><span class="src">Mimare Design</span>
+    <span class="src">Doc. Nuvemshop</span><span class="src">Reclamação real — Portal da Queixa</span>
+  </div>
+
+  <div class="finding-card">
+    <div class="ftitle">Nenhum dos 8 sites tem um configurador de personalização real</div>
+    <p style="margin:0">A Zazzle tem um preview ("RealView") mal explicado; a Paperview tem um "Planner Interativo" que só folheia telas prontas, sem personalizar nada de verdade. Os outros quatro não têm preview nenhum — o cliente só vê fotos genéricas.</p>
+  </div>
+  <div class="finding-card">
+    <div class="ftitle">Comparar produtos parecidos é difícil</div>
+    <p style="margin:0">Catálogos repetem o mesmo produto em várias seções, categorias se sobrepõem (a Persona Papelaria tem "Blocos" em dois lugares diferentes), e o preço aparece em unidades inconsistentes de card para card na FuturaIM.</p>
+  </div>
+  <div class="finding-card">
+    <div class="ftitle">Prazo de produção quase sempre ausente ou vago</div>
+    <p style="margin:0">A FuturaIM é a única com prazo explícito ("3 dias úteis") antes da compra. O pior caso real: uma reclamação pública no Portal da Queixa descreve um prazo combinado só verbalmente, uma fila de produção revelada apenas depois do pagamento, nenhum status de acompanhamento, e um processo de reembolso confuso.</p>
+  </div>
+
+  <div class="pullband">
+    <blockquote>"Paguei achando que ia ficar pronto em uma semana. Só descobri que tinha fila depois que o dinheiro já tinha saído."</blockquote>
+    <cite>— resumo de uma reclamação pública real sobre papelaria personalizada (Portal da Queixa)</cite>
+  </div>
+</section>
+
+<section>
+  <span class="tagmark hip">◆ Personas fictícias</span>
+  <h2>Quatro pessoas, quatro motivos para desistir</h2>
+  <p>Cada persona é fictícia, mas amarrada a um achado real da pesquisa acima — não são hipóteses soltas.</p>
+
+  <div class="persona">
+    <div class="name">Marina, 29 — vai casar em 4 meses</div>
+    <p style="margin:0">Quer convites personalizados e já ouviu falar de gente que recebeu convite atrasado, perto do evento. Precisa do prazo de produção confirmado por escrito antes de comprar — não prometido só por mensagem. <em>(reflexo direto da reclamação do Portal da Queixa)</em></p>
+  </div>
+  <div class="persona">
+    <div class="name">Letícia, 24 — quer algo só pra ela</div>
+    <p style="margin:0">Quer personalizar uma agenda com nome e cor, por afeto. Tem medo de pedir e a peça não ficar como imaginou, porque nunca viu um preview de verdade em nenhum site parecido. <em>(zero configurador real nos 8 sites)</em></p>
+  </div>
+  <div class="persona">
+    <div class="name">Fernanda, 35 — compra kits de presente</div>
+    <p style="margin:0">Quer comparar preço e opções entre produtos parecidos rápido, pra chá de bebê ou presente de professora. Se perde em catálogos repetitivos com unidade de preço que muda de card pra card. <em>(achado da FuturaIM/Persona Papelaria)</em></p>
+  </div>
+  <div class="persona">
+    <div class="name">Rodrigo, 31 — autônomo, compra em lote</div>
+    <p style="margin:0">Quer papelaria personalizada pro próprio negócio — cartão de visita, etiqueta — em quantidade. Precisa de prazo confiável pra não atrasar a própria operação. <em>(prazo escondido, pacotes fixos sem flexibilidade)</em></p>
+  </div>
+</section>
+
+<section>
+  <span class="tagmark hip">◆ Jornada (hipótese)</span>
+  <h2>Onde a compra da Marina trava</h2>
+  <p>Mapeei a jornada da Marina — a persona com o cenário mais crítico — pra expor exatamente onde a compra desanda.</p>
+  <div style="margin-top:20px">
+    <div class="journey-step"><div class="dot">1</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Descoberta</h3><p style="margin:0;font-size:13.5px">Chega buscando "convites personalizados casamento".</p></div></div>
+    <div class="journey-step"><div class="dot">2</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Exploração</h3><p style="margin:0;font-size:13.5px">Navega o catálogo, tenta entender opções de papel, formato e quantidade.</p></div></div>
+    <div class="journey-step critical"><div class="dot">3</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Personalização — crítico</h3><p style="margin:0;font-size:13.5px">Tenta visualizar como fica o convite com nome do casal e data, antes de decidir. Trava sem um preview real.</p></div></div>
+    <div class="journey-step critical"><div class="dot">4</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Verificação de prazo — o ponto mais crítico</h3><p style="margin:0;font-size:13.5px">Precisa confirmar se dá tempo de chegar antes do casamento. Sem prazo visível e confirmado por escrito, ela desiste ou arrisca.</p></div></div>
+    <div class="journey-step"><div class="dot">5</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Compra</h3><p style="margin:0;font-size:13.5px">Só fecha o pedido depois de ver o prazo confirmado.</p></div></div>
+    <div class="journey-step"><div class="dot">6</div><div><h3 style="font-size:14.5px;margin-bottom:2px">Acompanhamento</h3><p style="margin:0;font-size:13.5px">Quer ver o status da produção — não silêncio até a entrega chegar.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Arquitetura da informação</span>
+  <h2>Cada seção resolve um achado específico</h2>
+  <div class="ia-grid">
+    <div class="ia-item"><h3 style="font-size:14.5px">Home</h3><p style="margin:0;font-size:13px">Vitrines, busca e categorias.</p><div class="finding">Entrada direta pro que o cliente já sabe que quer.</div></div>
+    <div class="ia-item"><h3 style="font-size:14.5px">Catálogo</h3><p style="margin:0;font-size:13px">Filtro real por categoria/preço, unidade de preço sempre igual.</p><div class="finding">Resolve a inconsistência da FuturaIM/Persona.</div></div>
+    <div class="ia-item"><h3 style="font-size:14.5px">Produto</h3><p style="margin:0;font-size:13px">Personalização com prévia em tempo real e prazo visível, não escondido.</p><div class="finding">Resolve FuturaIM/Printi.</div></div>
+    <div class="ia-item"><h3 style="font-size:14.5px">Carrinho</h3><p style="margin:0;font-size:13px">Prazo de entrega consolidado considerando todas as personalizações.</p><div class="finding">Nenhum concorrente consolida isso.</div></div>
+    <div class="ia-item"><h3 style="font-size:14.5px">Checkout</h3><p style="margin:0;font-size:13px">Confirmação por escrito do prazo de entrega.</p><div class="finding">Resolve o caso real do Portal da Queixa.</div></div>
+    <div class="ia-item"><h3 style="font-size:14.5px">Minha conta</h3><p style="margin:0;font-size:13px">Pedidos com status de produção visível.</p><div class="finding">Nenhum concorrente mostra isso.</div></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Wireframes</span>
+  <h2>De grayscale a quase-produto</h2>
+  <p>Dois níveis de fidelidade, com os mesmos 9 fluxos principais — e, na média fidelidade, 5 estados de erro e vazio que respondem diretamente aos achados da pesquisa: catálogo sem resultado, carrinho vazio, prazo indisponível, campo de personalização inválido e pagamento recusado.</p>
+  <a class="linkcard" href="https://claude.ai/artifact/5LKhAUK2zdRR9VWG2cuq2T" target="_blank" rel="noopener">
+    <div><div class="t">Wireframes — baixa fidelidade</div><div class="s">9 telas, estrutura e hierarquia sem estilo visual</div></div>
+    <span class="arrow">→</span>
+  </a>
+  <a class="linkcard" href="https://claude.ai/artifact/VgVLpyZdkNCDpdze3qCx6z" target="_blank" rel="noopener">
+    <div><div class="t">Protótipo clicável (média fidelidade + identidade visual)</div><div class="s">Fluxo completo, interativo, com a UI final aplicada</div></div>
+    <span class="arrow">→</span>
+  </a>
+  <a class="linkcard" href="index.html">
+    <div><div class="t">Loja real</div><div class="s">Mesmo fluxo completo, publicado como site</div></div>
+    <span class="arrow">→</span>
+  </a>
+</section>
+
+<section>
+  <span class="eyebrow">Identidade visual</span>
+  <h2>Paleta 03 — minimalismo delicado</h2>
+  <p>Paleta e tipografia definidas pela própria Yara, com checklist de acessibilidade próprio (WCAG 2.2). Cada cor foi conferida com a fórmula de contraste real antes de entrar no protótipo.</p>
+  <div class="palette-row">
+    <div class="swatch"><div class="dot" style="background:#596747"></div><div class="label">Verde-oliva<br>botões e links</div></div>
+    <div class="swatch"><div class="dot" style="background:#B87579"></div><div class="label">Rosa queimado<br>destaques</div></div>
+    <div class="swatch"><div class="dot" style="background:#E9D9D0"></div><div class="label">Bege rosado<br>cards</div></div>
+    <div class="swatch"><div class="dot" style="background:#F7F4EF;border:1px solid #D9C4B4"></div><div class="label">Off-white<br>fundo</div></div>
+    <div class="swatch"><div class="dot" style="background:#302A26"></div><div class="label">Marrom escuro<br>texto</div></div>
+    <div class="swatch"><div class="dot" style="background:#9E303D"></div><div class="label">Vinho escuro<br>erros</div></div>
+  </div>
+  <div class="type-sample">
+    <span class="h">Papelaria que carrega o seu recado</span>
+    <span class="b">Playfair Display pros títulos, DM Sans pro corpo — a mesma dupla usada no protótipo inteiro.</span>
+  </div>
+  <p style="margin-top:8px">O rosa queimado da paleta reprova o mínimo de contraste de texto (4,5:1) quando usado como cor de letra — por isso ele aparece só em fundo decorativo (ícone de categoria, anel de seleção), nunca como texto corrido.</p>
+</section>
+
+<section>
+  <span class="tagmark hip">◆ Testes de usabilidade simulados</span>
+  <h2>O protótipo resolve o que a pesquisa encontrou?</h2>
+  <p>Testes simulados com as 4 personas, direto no protótipo clicável publicado.</p>
+  <div class="checklist">
+    <div class="item"><span class="ok">✓</span><span><b>Marina</b> — ao digitar uma data de evento muito próxima, o sistema avisa antes da compra que não dá tempo, e sugere outra data ou entrega expressa. Resolve exatamente o caso do Portal da Queixa.</span></div>
+    <div class="item"><span class="ok">✓</span><span><b>Letícia</b> — a prévia de personalização atualiza na hora conforme ela digita e troca tipografia ou cor, então ela vê o resultado antes de decidir.</span></div>
+    <div class="item"><span class="ok">✓</span><span><b>Fernanda</b> — os filtros de categoria e prazo funcionam, e o preço aparece sempre por unidade, fácil de comparar.</span></div>
+    <div class="item"><span style="color:var(--danger);font-weight:700">⚠</span><span><b>Rodrigo</b> — consegue colocar várias peças no mesmo carrinho com prazo consolidado, mas teria que repetir a personalização produto por produto — não existe campo de quantidade. Ponto de atenção pra uma próxima iteração, não um bloqueio.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="tagmark real">● Auditoria real</span>
+  <h2>Responsividade e acessibilidade</h2>
+  <p>Auditoria com script próprio — fórmula de contraste WCAG extraída do DOM renderizado, não só inspeção visual.</p>
+  <div class="finding-card">
+    <div class="ftitle">O maior achado: nada era navegável por teclado</div>
+    <p style="margin:0">Cards de produto e categoria, checkboxes de filtro, chips de tipografia, swatches de cor, abas da conta e o FAQ eram elementos clicáveis só no mouse — sem foco, sem papel semântico, sem resposta a Enter ou Espaço. Corrigido com o papel correto em cada um (botão, checkbox, opção, aba), navegação por teclado funcional, e um anel de foco visível na cor da marca.</p>
+  </div>
+  <div class="finding-card">
+    <div class="ftitle">3 alvos de toque abaixo do mínimo de 24×24px</div>
+    <p style="margin:0">Os links do menu superior, o link do rodapé e o campo de busca. Aumentados com mais espaço de toque.</p>
+  </div>
+  <div class="finding-card ok">
+    <div class="ftitle">Conferido e já estava correto</div>
+    <p style="margin:0">Contraste das 6 cores da paleta em todo uso real de texto · nenhum scroll horizontal de 320px a telas grandes · texto redimensiona a 200% sem quebrar · erro e sucesso nunca dependem só de cor, sempre com ícone junto.</p>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Conclusão</span>
+  <h2>O que este projeto propõe</h2>
+  <p>Papel & Afeto parte de um problema validado em 8 concorrentes reais — a personalização é invisível até o produto chegar, e o prazo raramente é confiável antes da compra — e responde com três decisões de design que nenhum concorrente analisado tinha: uma prévia ao vivo da personalização, um prazo de produção calculado e confirmado por escrito antes do pagamento, e um acompanhamento de pedido que mostra status real em vez de silêncio.</p>
+  <p>O processo seguiu pesquisa real → personas e jornada (hipótese, claramente sinalizadas como tal) → arquitetura da informação → wireframes em dois níveis de fidelidade → protótipo clicável → identidade visual própria → auditoria real de acessibilidade, com dois achados concretos corrigidos no caminho (navegação por teclado ausente, alvos de toque pequenos).</p>
+</section>
+
+<div class="footer-note">
+  Papel & Afeto é parte de uma linha de estudos de caso em e-commerce para pequenos negócios, ao lado de <a href="https://tracoebarroloja.vercel.app/case.html" target="_blank" rel="noopener">Traço e Barro</a> e <a href="https://reveste-loja.vercel.app/case.html" target="_blank" rel="noopener">ReVeste</a>.
+</div>
+
+</div>
+</body>
+</html>
