@@ -407,6 +407,7 @@ function renderCart(){
         </div>
       </div>`).join('')}
   </div>
+  <button class="btn block" data-go="catalog">← Continuar comprando</button>
   <div class="card" style="font-size:12.5px">⏱ Prazo consolidado do pedido: entrega até <b>${fmtDate(s.arrival)}</b> (considerando a peça mais demorada, ${s.maxLead} dias úteis)</div>
   <div class="card">
     <div class="rowline"><span>Subtotal</span><span>${fmt(s.subtotal)}</span></div>
@@ -503,16 +504,44 @@ function renderAccount(){
       </div>`).join('')}</div>` : `<div style="font-size:12px;color:var(--muted)">Nenhum favorito ainda.</div>`;
   } else {
     body = `
+    ${state.signupSuccess ? `<div class="alert ok">✓ <span>Conta criada com sucesso! Bem-vinda, ${esc(state.accountName)}.</span></div>` : ''}
     <div class="card" style="display:flex;flex-direction:column;gap:8px">
-      <div><div class="label">Nome</div><div style="font-size:13px;margin-top:2px">Marina Souza</div></div>
-      <div><div class="label">E-mail</div><div style="font-size:13px;margin-top:2px">marina.souza@email.com</div></div>
+      <div><div class="label">Nome</div><div style="font-size:13px;margin-top:2px">${esc(state.accountName) || 'Marina Souza'}</div></div>
+      <div><div class="label">E-mail</div><div style="font-size:13px;margin-top:2px">${esc(state.accountEmail) || 'marina.souza@email.com'}</div></div>
       <div><div class="label">Telefone</div><div style="font-size:13px;margin-top:2px">(11) 98888-2231</div></div>
     </div>`;
   }
   return `
   <h2>Minha conta</h2>
+  <div style="font-size:12px;color:var(--muted)">Novo por aqui? <span class="linkbtn" data-go="signup">Criar conta</span></div>
   <div class="tabs" role="tablist">${tabs.map(([k,l])=>`<div class="tab ${state.accountTab===k?'on':''}" data-accounttab="${k}" tabindex="0" role="tab" aria-selected="${state.accountTab===k}">${l}</div>`).join('')}</div>
   ${body}`;
+}
+
+function renderSignup(){
+  return `
+  <div class="back" data-go="account" tabindex="0" role="button">← Voltar pra Minha conta</div>
+  <h2>Criar conta</h2>
+  <div style="font-size:14px;color:var(--muted);line-height:1.6">Crie sua conta pra acompanhar pedidos, salvar favoritos e agilizar suas próximas compras.</div>
+  <div>
+    <div class="label" style="margin-bottom:6px">Nome completo</div>
+    <input class="field" id="suName" placeholder="Seu nome completo">
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:6px">E-mail</div>
+    <input class="field" id="suEmail" type="email" placeholder="seuemail@exemplo.com">
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:6px">Senha</div>
+    <input class="field" id="suPassword" type="password" placeholder="Mínimo 6 caracteres">
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:6px">Confirmar senha</div>
+    <input class="field" id="suConfirm" type="password" placeholder="Repita a senha">
+  </div>
+  <div class="alert" id="signupError" style="display:none"></div>
+  <button class="btn primary block" data-signupsubmit="1">Criar conta</button>
+  <div style="font-size:12px;color:var(--muted);text-align:center">Já tem conta? <span class="linkbtn" data-go="account">Entrar</span></div>`;
 }
 
 function renderInstitutional(){
@@ -557,6 +586,7 @@ function render(){
     case 'checkout': body = renderCheckout(); break;
     case 'confirmation': body = renderConfirmation(); break;
     case 'account': body = renderAccount(); break;
+    case 'signup': body = renderSignup(); break;
     case 'institutional': body = renderInstitutional(); break;
     default: body = renderHome();
   }
@@ -625,6 +655,7 @@ document.getElementById('app').addEventListener('click', e=>{
   const favtoggle = t.closest('[data-favtoggle]');
   const faq = t.closest('[data-faq]');
   const politica = t.closest('[data-politica]');
+  const signupsubmit = t.closest('[data-signupsubmit]');
 
   if(go){
     if(go.dataset.accounttab) state.accountTab = go.dataset.accounttab;
@@ -711,6 +742,29 @@ document.getElementById('app').addEventListener('click', e=>{
   }
   if(faq){ const i = Number(faq.dataset.faq); state.openFaq = state.openFaq===i ? null : i; render(); return; }
   if(politica){ state.openPolitica = !state.openPolitica; render(); return; }
+  if(signupsubmit){
+    const name = document.getElementById('suName').value.trim();
+    const email = document.getElementById('suEmail').value.trim();
+    const pass = document.getElementById('suPassword').value;
+    const confirm = document.getElementById('suConfirm').value;
+    const confirmEl = document.getElementById('suConfirm');
+    const errEl = document.getElementById('signupError');
+    let msg = '';
+    if(!name || !email || !pass || !confirm) msg = 'Preencha todos os campos pra continuar.';
+    else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg = 'Digite um e-mail válido.';
+    else if(pass.length < 6) msg = 'A senha precisa ter pelo menos 6 caracteres.';
+    else if(pass !== confirm) msg = 'As senhas não são iguais.';
+    confirmEl.classList.toggle('err', msg === 'As senhas não são iguais.');
+    if(msg){
+      errEl.innerHTML = '⚠ <span>' + msg + '</span>';
+      errEl.style.display = 'flex';
+      return;
+    }
+    state.accountName = name;
+    state.accountEmail = email;
+    nav('account', {accountTab:'dados', signupSuccess:true});
+    return;
+  }
 });
 
 render();
