@@ -24,7 +24,8 @@ h3{font-size:20px;font-weight:600;line-height:1.3}
 a{color:inherit;text-decoration:none}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
 .topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
-.logo{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;cursor:pointer}
+.logo{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;cursor:pointer;display:flex;align-items:center;gap:7px}
+.logo img{height:28px;width:auto;display:block}
 .nav{display:flex;gap:10px;font-size:12px;color:var(--muted);font-weight:500}
 .nav span{cursor:pointer;padding:9px 6px;display:inline-flex;align-items:center}
 .nav span.on{color:var(--accent);font-weight:700}
@@ -104,15 +105,15 @@ h1,h2,h3{text-wrap:balance}
 
 <script>
 const PRODUCTS = [
-  {id:'cad1', name:'Caderno pautado A5', cat:'cadernos', catLabel:'Cadernos', price:24.90, lead:2, icon:'📓', personal:{type:'nome', label:'Nome ou iniciais na capa', maxLen:30}, desc:'Caderno A5 capa dura, 120 folhas pautadas, com a sua personalização gravada na capa.'},
-  {id:'pln1', name:'Planner semanal', cat:'planners', catLabel:'Planners', price:39.90, lead:2, icon:'🗓️', personal:{type:'nome', label:'Nome na capa', maxLen:30}, desc:'Planner semanal perpétuo, miolo offset 90g, capa com nome personalizado.'},
-  {id:'crt1', name:'Cartão agradecimento', cat:'cartoes', catLabel:'Cartões', price:4.90, lead:3, icon:'💌', personal:{type:'mensagem', label:'Mensagem personalizada', maxLen:120}, desc:'Cartão duplo em papel reciclado, com a mensagem que você escolher no miolo.'},
-  {id:'cnv1', name:'Convite casamento floral', cat:'convites', catLabel:'Convites', price:6.90, lead:4, icon:'🤍', personal:{type:'mensagem', label:'Mensagem personalizada', maxLen:200, needsDate:true}, desc:'Convite floral em papel perolado, com nomes, data e texto do seu jeito.'},
-  {id:'kit1', name:'Kit presente chá de bebê', cat:'kits', catLabel:'Kits de presente', price:54.90, lead:3, icon:'🎁', personal:{type:'nome', label:'Nome do bebê no kit', maxLen:24}, desc:'Kit com lembrancinhas, tag e embalagem personalizada pro chá de bebê.'},
-  {id:'ade1', name:'Adesivo em folha', cat:'adesivos', catLabel:'Adesivos', price:0.48, lead:2, icon:'⭐', personal:null, desc:'Folha de adesivos vinil, acabamento brilho ou mate, modelos prontos.'},
-  {id:'cnc1', name:'Caneca personalizada', cat:'canecas', catLabel:'Canecas', price:29.90, lead:2, icon:'☕', personal:{type:'nome', label:'Nome ou frase na caneca', maxLen:40}, desc:'Caneca de cerâmica 325ml, estampa permanente com o nome ou frase que você quiser.'},
-  {id:'blc1', name:'Bloquinho personalizado', cat:'blocos', catLabel:'Blocos', price:14.90, lead:2, icon:'📝', personal:{type:'nome', label:'Nome na capa', maxLen:30}, desc:'Bloquinho de anotações com 80 folhas e capa personalizada com o seu nome.'},
-  {id:'cnt1', name:'Caneta personalizada', cat:'canetas', catLabel:'Canetas', price:12.90, lead:2, icon:'🖊️', personal:{type:'nome', label:'Nome ou iniciais na caneta', maxLen:25}, desc:'Caneta esferográfica metálica, gravação a laser com nome ou iniciais.'},
+  {id:'cad1', name:'Caderno pautado A5', cat:'cadernos', catLabel:'Cadernos', price:24.90, lead:2, icon:'📓', img:'assets/products/caderno.jpg', personal:{type:'nome', label:'Nome ou iniciais na capa', maxLen:30}, desc:'Caderno A5 capa dura, 120 folhas pautadas, com a sua personalização gravada na capa.'},
+  {id:'pln1', name:'Planner semanal', cat:'planners', catLabel:'Planners', price:39.90, lead:2, icon:'🗓️', img:'assets/products/agenda.jpg', personal:{type:'nome', label:'Nome na capa', maxLen:30}, desc:'Planner semanal perpétuo, miolo offset 90g, capa com nome personalizado.'},
+  {id:'crt1', name:'Cartão agradecimento', cat:'cartoes', catLabel:'Cartões', price:4.90, lead:3, icon:'💌', img:'assets/products/cartao.jpg', personal:{type:'mensagem', label:'Mensagem personalizada', maxLen:120}, desc:'Cartão duplo em papel reciclado, com a mensagem que você escolher no miolo.'},
+  {id:'cnv1', name:'Convite casamento floral', cat:'convites', catLabel:'Convites', price:6.90, lead:4, icon:'🤍', img:'assets/products/convite.jpg', personal:{type:'mensagem', label:'Mensagem personalizada', maxLen:200, needsDate:true}, desc:'Convite floral em papel perolado, com nomes, data e texto do seu jeito.'},
+  {id:'kit1', name:'Kit presente chá de bebê', cat:'kits', catLabel:'Kits de presente', price:54.90, lead:3, icon:'🎁', img:'assets/products/kit.jpg', personal:{type:'nome', label:'Nome do bebê no kit', maxLen:24}, desc:'Kit com lembrancinhas, tag e embalagem personalizada pro chá de bebê.'},
+  {id:'ade1', name:'Adesivo em folha', cat:'adesivos', catLabel:'Adesivos', price:0.48, lead:2, icon:'⭐', img:'assets/products/adesivo.jpg', personal:null, desc:'Folha de adesivos vinil, acabamento brilho ou mate, modelos prontos.'},
+  {id:'cnc1', name:'Caneca personalizada', cat:'canecas', catLabel:'Canecas', price:29.90, lead:2, icon:'☕', img:'assets/products/caneca.jpg', personal:{type:'nome', label:'Nome ou frase na caneca', maxLen:40}, desc:'Caneca de cerâmica 325ml, estampa permanente com o nome ou frase que você quiser.'},
+  {id:'blc1', name:'Bloquinho personalizado', cat:'blocos', catLabel:'Blocos', price:14.90, lead:2, icon:'📝', img:'assets/products/bloquinho.jpg', personal:{type:'nome', label:'Nome na capa', maxLen:30}, desc:'Bloquinho de anotações com 80 folhas e capa personalizada com o seu nome.'},
+  {id:'cnt1', name:'Caneta personalizada', cat:'canetas', catLabel:'Canetas', price:12.90, lead:2, icon:'🖊️', img:'assets/products/caneta.jpg', personal:{type:'nome', label:'Nome ou iniciais na caneta', maxLen:25}, desc:'Caneta esferográfica metálica, gravação a laser com nome ou iniciais.'},
 ];
 const CATS = [
   {k:'cadernos', label:'Cadernos', icon:'📓'},
@@ -207,12 +208,17 @@ function cartSummary(){
 
 function esc(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+function imgph(src, icon, extraStyle){
+  if(src) return `<div class="imgph" style="${extraStyle||''}background-image:url('${src}');background-size:cover;background-position:center"></div>`;
+  return `<div class="imgph" style="${extraStyle||''}">${icon}</div>`;
+}
+
 // ---------- Renderers ----------
 
 function renderTopbar(){
   return `
   <div class="topbar">
-    <div class="logo" data-go="home" tabindex="0" role="button" aria-label="Página inicial">Papel &amp; Afeto</div>
+    <div class="logo" data-go="home" tabindex="0" role="button" aria-label="Página inicial"><img src="assets/logo-icon.png" alt="">Papel &amp; Afeto</div>
     <div class="nav">
       <span class="${state.view==='catalog'?'on':''}" data-go="catalog" tabindex="0" role="link">Catálogo</span>
       <span class="${state.view==='account'?'on':''}" data-go="account" tabindex="0" role="link">Conta</span>
@@ -252,7 +258,7 @@ function renderHome(){
   <div class="grid3">
     ${bestsellers.map(p=>`
       <div class="pcard" data-product="${p.id}" tabindex="0" role="button" aria-label="${p.name}, ${fmt(p.price)} por unidade">
-        <div class="imgph" style="height:56px">${p.icon}</div>${p.name}<div class="price">${fmt(p.price)}/un</div>
+        ${imgph(p.img, p.icon, 'height:56px;')}${p.name}<div class="price">${fmt(p.price)}/un</div>
       </div>`).join('')}
   </div>`;
 }
@@ -282,7 +288,7 @@ function renderCatalog(){
         <div class="grid2 product-grid">
           ${list.map(p=>`
             <div class="pcard" data-product="${p.id}" tabindex="0" role="button" aria-label="${p.name}, ${fmt(p.price)} por unidade">
-              <div class="imgph" style="height:56px">${p.icon}</div>${p.name}<div class="price">${fmt(p.price)}/un</div>
+              ${imgph(p.img, p.icon, 'height:56px;')}${p.name}<div class="price">${fmt(p.price)}/un</div>
             </div>`).join('') || `<div style="font-size:12px;color:var(--muted);padding:8px">Nenhum produto nesse filtro ainda.</div>`}
         </div>
       `}
@@ -295,7 +301,7 @@ function renderProduct(){
   if(!p) return renderCatalog();
   return `
   <div class="back" data-go="catalog" tabindex="0" role="button">← Voltar ao catálogo</div>
-  <div class="imgph" style="height:180px;font-size:48px">${p.icon}</div>
+  ${imgph(p.img, p.icon, 'height:180px;font-size:48px;')}
   <div>
     <div class="label">${p.catLabel}</div>
     <h3 style="margin-top:4px">${p.name}</h3>
@@ -389,7 +395,7 @@ function renderCart(){
   <div style="display:flex;flex-direction:column;gap:10px">
     ${state.cart.map((item,idx)=>`
       <div class="card cartitem">
-        <div class="imgph">${item.icon}</div>
+        ${imgph(item.img, item.icon, '')}
         <div class="meta">
           <div class="nm">${item.name}</div>
           <div class="sub">${item.sub || 'Sem personalização'}</div>
@@ -490,7 +496,7 @@ function renderAccount(){
     const favs = PRODUCTS.filter(p=>state.favorites.has(p.id));
     body = favs.length ? `<div class="grid2">${favs.map(p=>`
       <div class="card" style="display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;justify-content:space-between"><span class="imgph" style="width:40px;height:40px;font-size:16px">${p.icon}</span><span class="heart" data-favtoggle="${p.id}" tabindex="0" role="button" aria-pressed="true" aria-label="Remover ${p.name} dos favoritos">♥</span></div>
+        <div style="display:flex;justify-content:space-between">${imgph(p.img, p.icon, 'width:40px;height:40px;font-size:16px;')}<span class="heart" data-favtoggle="${p.id}" tabindex="0" role="button" aria-pressed="true" aria-label="Remover ${p.name} dos favoritos">♥</span></div>
         <div style="font-size:11.5px;font-weight:500;cursor:pointer" data-product="${p.id}" tabindex="0" role="button" aria-label="${p.name}">${p.name}</div>
         <div class="price" style="font-size:11px">${fmt(p.price)}</div>
       </div>`).join('')}</div>` : `<div style="font-size:12px;color:var(--muted)">Nenhum favorito ainda.</div>`;
@@ -635,7 +641,7 @@ document.getElementById('app').addEventListener('click', e=>{
   }
   if(addplain){
     const p = productById(addplain.dataset.addplain);
-    state.cart.push({name:p.name, icon:p.icon, price:p.price, lead:p.lead, sub:'Sem personalização'});
+    state.cart.push({name:p.name, icon:p.icon, img:p.img, price:p.price, lead:p.lead, sub:'Sem personalização'});
     nav('cart');
     return;
   }
@@ -644,7 +650,7 @@ document.getElementById('app').addEventListener('click', e=>{
     const p = productById(addpersonalized.dataset.addpersonalized);
     const d = p.draft;
     const sub = p.personal.type==='mensagem' ? `"${d.text}"` : d.text;
-    state.cart.push({name:p.name, icon:p.icon, price:p.price, lead:p.lead, sub: sub + ' · ' + TYPO.find(t=>t.k===d.typography).label});
+    state.cart.push({name:p.name, icon:p.icon, img:p.img, price:p.price, lead:p.lead, sub: sub + ' · ' + TYPO.find(t=>t.k===d.typography).label});
     p.draft = null;
     nav('cart');
     return;

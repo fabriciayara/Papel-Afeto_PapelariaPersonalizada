@@ -15,7 +15,9 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:16px max(20px,env(safe-area-inset-left,0px)) 16px max(20px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--border);background:var(--surface)}
-.topnav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--text);text-decoration:none}
+.topnav .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.topnav .logo img{height:26px;width:auto;display:block}
+.hero .logo-mark{height:72px;width:auto;margin-bottom:18px}
 .topnav a.back{font-size:12.5px;color:var(--accent);font-weight:600;text-decoration:none}
 .wrap{max-width:720px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 80px max(20px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:'Playfair Display',Georgia,serif;color:var(--text);text-wrap:balance;margin:0}
@@ -82,13 +84,14 @@ section:last-of-type{border-bottom:none}
 <body>
 
 <div class="topnav">
-  <a class="logo" href="index.html">Papel &amp; Afeto</a>
+  <a class="logo" href="index.html"><img src="assets/logo-icon.png" alt="">Papel &amp; Afeto</a>
   <a class="back" href="index.html">← Voltar pra loja</a>
 </div>
 
 <div class="wrap">
 
 <div class="hero">
+  <img class="logo-mark" src="assets/logo-icon.png" alt="Papel &amp; Afeto">
   <span class="eyebrow">Estudo de caso · UX/UI Design</span>
   <h1>Papel & Afeto</h1>
   <p style="font-size:17px;color:var(--muted);margin-top:16px;max-width:52ch">E-commerce de papelaria criativa personalizada — cadernos, agendas, cartões, convites e kits de presente feitos sob medida.</p>
