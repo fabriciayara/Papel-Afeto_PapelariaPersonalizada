@@ -222,7 +222,7 @@ function renderTopbar(){
     <div class="logo" data-go="home" tabindex="0" role="button" aria-label="Página inicial"><img src="assets/logo-icon.png" alt="">Papel &amp; Afeto</div>
     <div class="nav">
       <span class="${state.view==='catalog'?'on':''}" data-go="catalog" tabindex="0" role="link">Catálogo</span>
-      <span class="${state.view==='account'?'on':''}" data-go="account" tabindex="0" role="link">Conta</span>
+      <span class="${['account','login','signup'].includes(state.view)?'on':''}" data-go="login" tabindex="0" role="link">Conta</span>
       <span class="${state.view==='cart'?'on':''}" data-go="cart" tabindex="0" role="link">Carrinho (${state.cart.length})</span>
     </div>
   </div>`;
@@ -518,9 +518,32 @@ function renderAccount(){
   ${body}`;
 }
 
+function renderLogin(){
+  return `
+  <div class="empty" style="padding-top:8px;gap:8px">
+    <img src="assets/logo-icon.png" alt="" style="height:84px;width:auto">
+    <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:24px;margin-top:2px">Papel &amp; Afeto</div>
+    <div style="font-size:13px;color:var(--muted);max-width:280px;margin-top:2px">Entre na sua conta pra acompanhar pedidos e favoritos, ou crie uma agora.</div>
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:6px">E-mail</div>
+    <input class="field" id="liEmail" type="email" placeholder="seuemail@exemplo.com">
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:6px">Senha</div>
+    <input class="field" id="liPassword" type="password" placeholder="Sua senha">
+  </div>
+  <div class="alert" id="loginError" style="display:none"></div>
+  <button class="btn primary block" data-loginsubmit="1">Entrar</button>
+  <div style="display:flex;align-items:center;gap:10px;color:var(--faint);font-size:11px">
+    <div style="flex:1;height:1px;background:var(--border)"></div>ou<div style="flex:1;height:1px;background:var(--border)"></div>
+  </div>
+  <button class="btn block" data-go="signup">Criar conta</button>`;
+}
+
 function renderSignup(){
   return `
-  <div class="back" data-go="account" tabindex="0" role="button">← Voltar pra Minha conta</div>
+  <div class="back" data-go="login" tabindex="0" role="button">← Voltar</div>
   <h2>Criar conta</h2>
   <div style="font-size:14px;color:var(--muted);line-height:1.6">Crie sua conta pra acompanhar pedidos, salvar favoritos e agilizar suas próximas compras.</div>
   <div>
@@ -541,7 +564,7 @@ function renderSignup(){
   </div>
   <div class="alert" id="signupError" style="display:none"></div>
   <button class="btn primary block" data-signupsubmit="1">Criar conta</button>
-  <div style="font-size:12px;color:var(--muted);text-align:center">Já tem conta? <span class="linkbtn" data-go="account">Entrar</span></div>`;
+  <div style="font-size:12px;color:var(--muted);text-align:center">Já tem conta? <span class="linkbtn" data-go="login">Entrar</span></div>`;
 }
 
 function renderInstitutional(){
@@ -586,6 +609,7 @@ function render(){
     case 'checkout': body = renderCheckout(); break;
     case 'confirmation': body = renderConfirmation(); break;
     case 'account': body = renderAccount(); break;
+    case 'login': body = renderLogin(); break;
     case 'signup': body = renderSignup(); break;
     case 'institutional': body = renderInstitutional(); break;
     default: body = renderHome();
@@ -656,6 +680,7 @@ document.getElementById('app').addEventListener('click', e=>{
   const faq = t.closest('[data-faq]');
   const politica = t.closest('[data-politica]');
   const signupsubmit = t.closest('[data-signupsubmit]');
+  const loginsubmit = t.closest('[data-loginsubmit]');
 
   if(go){
     if(go.dataset.accounttab) state.accountTab = go.dataset.accounttab;
@@ -763,6 +788,22 @@ document.getElementById('app').addEventListener('click', e=>{
     state.accountName = name;
     state.accountEmail = email;
     nav('account', {accountTab:'dados', signupSuccess:true});
+    return;
+  }
+  if(loginsubmit){
+    const email = document.getElementById('liEmail').value.trim();
+    const pass = document.getElementById('liPassword').value;
+    const errEl = document.getElementById('loginError');
+    let msg = '';
+    if(!email || !pass) msg = 'Preencha e-mail e senha pra continuar.';
+    else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg = 'Digite um e-mail válido.';
+    if(msg){
+      errEl.innerHTML = '⚠ <span>' + msg + '</span>';
+      errEl.style.display = 'flex';
+      return;
+    }
+    if(!state.accountEmail) state.accountEmail = email;
+    nav('account', {accountTab:'pedidos', signupSuccess:false});
     return;
   }
 });
