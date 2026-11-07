@@ -116,15 +116,15 @@ const PRODUCTS = [
   {id:'cnt1', name:'Caneta personalizada', cat:'canetas', catLabel:'Canetas', price:12.90, lead:2, icon:'🖊️', img:'assets/products/caneta.jpg', personal:{type:'nome', label:'Nome ou iniciais na caneta', maxLen:25}, desc:'Caneta esferográfica metálica, gravação a laser com nome ou iniciais.'},
 ];
 const CATS = [
-  {k:'cadernos', label:'Cadernos', icon:'📓'},
-  {k:'planners', label:'Agendas', icon:'🗓️'},
-  {k:'cartoes', label:'Cartões', icon:'💌'},
-  {k:'convites', label:'Convites', icon:'🤍'},
-  {k:'kits', label:'Kits', icon:'🎁'},
-  {k:'adesivos', label:'Adesivos', icon:'⭐'},
-  {k:'canecas', label:'Canecas', icon:'☕'},
-  {k:'blocos', label:'Blocos', icon:'📝'},
-  {k:'canetas', label:'Canetas', icon:'🖊️'},
+  {k:'cadernos', label:'Cadernos', icon:'📓', img:'assets/products/caderno.jpg'},
+  {k:'planners', label:'Agendas', icon:'🗓️', img:'assets/products/agenda.jpg'},
+  {k:'cartoes', label:'Cartões', icon:'💌', img:'assets/products/cartao.jpg'},
+  {k:'convites', label:'Convites', icon:'🤍', img:'assets/products/convite.jpg'},
+  {k:'kits', label:'Kits', icon:'🎁', img:'assets/products/kit.jpg'},
+  {k:'adesivos', label:'Adesivos', icon:'⭐', img:'assets/products/adesivo.jpg'},
+  {k:'canecas', label:'Canecas', icon:'☕', img:'assets/products/caneca.jpg'},
+  {k:'blocos', label:'Blocos', icon:'📝', img:'assets/products/bloquinho.jpg'},
+  {k:'canetas', label:'Canetas', icon:'🖊️', img:'assets/products/caneta.jpg'},
 ];
 const TYPO = [
   {k:'script', label:'Script', font:"'Brush Script MT',cursive"},
@@ -251,7 +251,7 @@ function renderHome(){
   <div class="grid4">
     ${CATS.filter(c=>['cadernos','planners','cartoes','convites','canecas','blocos','canetas'].includes(c.k)).map(c=>`
       <div class="pcard" data-cat="${c.k}" tabindex="0" role="button" aria-label="Categoria ${c.label}">
-        <div class="imgph" style="height:58px">${c.icon}</div>${c.label}
+        ${imgph(c.img, c.icon, 'height:58px;')}${c.label}
       </div>`).join('')}
   </div>
   <div class="label">Mais vendidos</div>
